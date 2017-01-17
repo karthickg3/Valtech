@@ -1,0 +1,89 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TechTalk.SpecFlow;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+
+
+[Setup]
+
+{
+	public static IWebDriver Driver = new firefoxdriver();
+	driver.Open();
+}
+
+//1. First Test
+[Test]
+{
+  	GoToUrl(https://www.valtech.com/)
+  	IsElementDisplayed(By.CssSelector(".fixed-aspect--16-9"));
+	driver.findelelment(".fixed-aspect--16-9").isdisplayed();
+}
+
+//2. Second Test
+//Same fashion you can return the string from the locator h1 for jobs and cases, but I can find this on the page.
+
+[Test]
+
+{
+	GoToUrl(https://www.valtech.com/);
+	driver.findelelment(".navigation__menu__item:nth-child(2) span").Click();
+	var returnelementfromlocator = driver.findelelment("h1");
+	Assert.Areequal(returnelemefromlocator, "Services");
+	
+}
+
+
+[Test]
+
+{
+	GoToUrl(https://www.valtech.com/);
+	driver.findelelment(".navigation__menu__item:nth-child(5) span").Click();
+	var returnelementfromlocator = driver.findelelment("h1");
+	Assert.Areequal(returnelemefromlocator, "Careers");
+	
+}
+
+[Test]
+
+{
+	GoToUrl(https://www.valtech.com/);
+	driver.findelelment(".navigation__menu__item:nth-child(1) span").Click();
+	var returnelementfromlocator = driver.findelelment("h1");
+	Assert.Areequal(returnelemefromlocator, "Work");
+	
+}
+//3.Third Test
+
+[Test]
+{
+        GoToUrl(https://www.valtech.com/);
+	var elements = driver.FindElements(".foot__offices");
+	var elementone = elements.ElementAt(0).displayed;
+
+	Assert.areequal(element1, "Aarhus")
+	// similar way the rest of the offices can be asserted 
+
+
+}
+
+[Teardown]
+{
+	driver.Quit()
+}
+
+
+//go to url
+public static void GoToUrl(Uri url)
+{
+    if (url == null)
+    {
+        throw new ArgumentNullException("url", "URL cannot be null.");
+    }
+
+    driver.Navigate().GoToUrl(url);
+}
+
